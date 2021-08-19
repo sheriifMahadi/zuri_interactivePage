@@ -1,0 +1,98 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <script src="https://kit.fontawesome.com/9319cf2728.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'backend_resume/style.css' %}">
+  </head>
+<body>
+    {% load crispy_forms_tags %}  
+
+    {% block content %}
+    <div class="header">
+        <a href="https://internship.zuri.team"><img src="{%static 'backend_resume/images/zuri.png'%}" alt="ZuriXI4G logo" width="100"></div>
+        </a>
+    </div>
+
+    <section class="personal_info">
+
+        {% for info in personal%}
+            <h1><span class="top">Hi There. </span> I Am {{info.name}} <span class="bottom">Fullstack developer</span></h1>
+            <div class="summary">
+                <h3>About Me</h3>{{info.summary}}
+            </div>
+            <div class="expertise">
+                <h3>Expertise</h3>{{info.expertise}}
+            </div>
+        {% endfor %}
+    </section>
+
+    <section class="languages_tools">
+        <div class="languages">
+            <h3>Languages</h3>
+            {% for language in languages%}
+                    <li>{{language}}</li>
+            {% endfor %}    
+        </div>
+      
+        <div class="tools">
+            <h3>Tools</h3>
+            {% for tool in tools%}
+                    <li>
+                        {{tool}}
+                    </li>
+            {% endfor %}
+       
+        </div>
+
+        <div class="projects">
+            <h3>Projects</h3>
+               <li>E-commerce</li>
+               <li>Mail</li>
+               <li>Network app</li>
+               <li>Chatapp</li>
+               <li>Todo app</li>
+
+        </div>
+
+    </section>
+
+    <section class="message_me">
+        <h3>Send Me A Message</h3>
+        <form action="{%url 'index'%}" method="POST">
+            {% csrf_token %} 
+            {{form | crispy}}
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </form>
+    </section>
+
+    <section class="contacts">
+        {% for socials in contact%}
+            <li>
+            <a href="{{socials.link}}">{{socials}}</a>
+            {%if socials.social_media == 'Instagram' %}
+                <i class="fab fa-instagram-square"></i>
+            </li>
+            {% elif socials.social_media == 'LinkedIn'%}
+                <i class="fab fa-linkedin"></i>
+            {% elif socials.social_media == 'Github' %}
+                <i class="fab fa-github"></i>
+            {% elif socials.social_media == 'Twitter' %}
+                <i class="fab fa-twitter"></i>
+
+            {% else %}
+            {%endif%}
+        {%endfor%}
+
+    </section>
+    {% endblock %} 
+
+</body>
+</html>
